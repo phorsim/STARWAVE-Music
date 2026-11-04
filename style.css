@@ -61,14 +61,12 @@ button {
     padding: 0 8px 42px
 }
 
-.brand-mark {
-    display: grid;
-    place-items: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #a78bfa, #ec4899);
-    font-size: 21px;
+.brand img {
+    width: 38px;
+    height: 38px;
+    object-fit: cover;
+    border-radius: 10px;
+    flex-shrink: 0;
     box-shadow: 0 5px 24px #a78bfa44
 }
 
