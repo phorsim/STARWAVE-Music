@@ -186,6 +186,60 @@ document.getElementById("save-playlist").addEventListener("click", () => {
     showToast(`Created playlist "${name}"`);
 });
 
+let installPrompt = null;
+const installDialog = document.getElementById("install-dialog");
+const installInstructions = document.getElementById("install-instructions");
+
+window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    installPrompt = event;
+});
+
+window.addEventListener("appinstalled", () => {
+    installPrompt = null;
+    showToast("STARWAVE was installed successfully");
+});
+
+const showInstallInstructions = () => {
+    const userAgent = navigator.userAgent;
+    if (/iPhone|iPad|iPod/i.test(userAgent)) {
+        installInstructions.textContent = "In Safari, tap Share, then choose “Add to Home Screen” to install STARWAVE.";
+    } else if (/Android/i.test(userAgent)) {
+        installInstructions.textContent = "Open your browser menu and tap “Install app” or “Add to Home screen”.";
+    } else {
+        installInstructions.textContent = "Use the install icon in your browser’s address bar, or open the browser menu and choose “Install STARWAVE”.";
+    }
+    installDialog.showModal();
+};
+
+const handleInstallClick = async () => {
+    if (navigator.standalone || window.matchMedia("(display-mode: standalone)").matches) {
+        showToast("STARWAVE is already installed");
+        return;
+    }
+
+    if (!installPrompt) {
+        showInstallInstructions();
+        return;
+    }
+
+    const prompt = installPrompt;
+    installPrompt = null;
+    try {
+        await prompt.prompt();
+        const { outcome } = await prompt.userChoice;
+        if (outcome === "accepted") showToast("STARWAVE is being installed");
+    } catch (error) {
+        console.error("Could not start the STARWAVE install prompt:", error);
+        showToast("Could not open the install prompt. Use your browser menu to install.");
+    }
+};
+
+document.querySelectorAll("#install-sidebar, #install-top, #install-mobile").forEach((button) => {
+    button.addEventListener("click", handleInstallClick);
+});
+document.getElementById("install-dismiss").addEventListener("click", () => installDialog.close());
+
 const searchInput = document.getElementById("global-search");
 const pageSearch = document.getElementById("page-search");
 [searchInput, pageSearch].forEach((input) => {
@@ -198,5 +252,9 @@ const pageSearch = document.getElementById("page-search");
 });
 
 if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js").catch(() => { }));
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./service-worker.js").catch((error) => {
+            console.error("Could not register the STARWAVE offline service worker:", error);
+        });
+    });
 }

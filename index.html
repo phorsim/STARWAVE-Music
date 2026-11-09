@@ -9,17 +9,16 @@
     <title>STARWAVE Studio</title>
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="stylesheet" href="./style.css" />
+    <link rel="apple-touch-icon" href="./assets/app-icon-192.png" />
     <meta name="google-site-verification" content="NUs0z4lpse6aPye6g0k1r5J7X8Z2n3x4y5z6a7b8c9d" />
-    <link rel="icon" href="./assets/image.png" type="image/png" />
-    <link rel="shortcut icon" href="./assets/image.png" type="image/png" />
-    <link rel="apple-touch-icon" href="./assets/image.png" />
+    <link rel="icon" type="image/svg+xml" href="./assets/app-icon.svg" />
 </head>
 
 <body>
     <div class="app-shell">
         <aside class="sidebar">
             <a class="brand" href="#" aria-label="STARWAVE home">
-                <img src="./assets/image.png" alt="" /><span>STARWAVE<span class="brand-light"> Studio</span></span>
+                <img src="./assets/app-icon.svg" alt="" /><span>STARWAVE<span class="brand-light"> Studio</span></span>
             </a>
             <nav class="main-nav" aria-label="Main navigation">
                 <button class="nav-link active" data-view="home"><span>⌂</span> Home</button>
@@ -35,7 +34,7 @@
             </div>
             <div class="sidebar-bottom">
                 <div class="storage-note"><span class="storage-dot"></span><span>Music stays on this device</span></div>
-                <button id="install-sidebar" class="install-link">Profile</button>
+                <button id="install-sidebar" class="install-link">Install app</button>
             </div>
         </aside>
 
@@ -46,7 +45,7 @@
                 <label class="search-box"><span>⌕</span><input id="global-search" type="search"
                         placeholder="Search songs, artists, albums..." /></label>
                 <div class="top-actions"><span class="premium-label">✦ YOUR PERSONAL MUSIC SPACE</span><button
-                        id="install-top" class="install-btn"></button>Profile</div>
+                        id="install-top" class="install-btn">Install app</button></div>
             </header>
 
             <section id="home-view" class="view active">
@@ -254,6 +253,7 @@
     <div class="mobile-nav"><button data-view="home" class="active"><span>⌂</span>Home</button><button
             data-view="search"><span>⌕</span>Search</button><button
             data-view="library"><span>▤</span>Library</button><button data-view="favorites"><span>♡</span>Liked</button>
+        <button id="install-mobile" type="button" aria-label="Install STARWAVE app"><span>⇩</span>Install</button>
     </div>
 
     <input id="file-input" type="file" accept="audio/*,.mp3,.wav,.ogg,.m4a,.aac,.flac" multiple hidden />
@@ -288,6 +288,18 @@
             </div><label class="field-label">Playlist name<input id="new-playlist-name" maxlength="40"
                     placeholder="e.g. Late Night Vibes" /></label><button type="button" id="save-playlist"
                 class="primary-btn full-width">Create playlist</button>
+        </form>
+    </dialog>
+    <dialog id="install-dialog" class="modal small-modal">
+        <form method="dialog">
+            <div class="modal-head">
+                <div>
+                    <p class="eyebrow">STARWAVE ON YOUR DEVICE</p>
+                    <h2>Install STARWAVE</h2>
+                </div><button class="close-btn" value="cancel" aria-label="Close">×</button>
+            </div>
+            <p class="modal-copy" id="install-instructions"></p>
+            <button type="button" id="install-dismiss" class="primary-btn full-width">Got it</button>
         </form>
     </dialog>
     <dialog id="queue-dialog" class="modal small-modal">

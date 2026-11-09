@@ -1186,7 +1186,8 @@ button {
         justify-items: center;
         align-content: center;
         gap: 3px;
-        min-width: 55px
+        min-width: 0;
+        flex: 1
     }
 
     .mobile-nav button span {
