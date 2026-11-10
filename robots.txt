@@ -1,0 +1,6 @@
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://starwavemusic-theta.vercel.app/sitemap.xml
